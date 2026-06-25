@@ -1,0 +1,23 @@
+---
+import { SITE } from '../consts';
+---
+
+<header class="site-header">
+  <a href="/" class="home">{SITE.title}</a>
+  <nav>
+    <a href="/blog">Writing</a>
+    <a href="/projects">Projects</a>
+    <a href="/about">About</a>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle color theme" title="Toggle theme">
+      <span aria-hidden="true">◐</span>
+    </button>
+  </nav>
+</header>
+
+<script is:inline>
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  });
+</script>

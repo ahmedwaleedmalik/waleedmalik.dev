@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="About"
+  description="Platform engineer and solutions architect in Islamabad. Kubernetes at scale, platform engineering, and the infrastructure under self-hosted AI."
+>
+  <h1>About</h1>
+  <div class="prose">
+    <p>
+      I'm Waleed, a platform engineer and solutions architect based in Islamabad, Pakistan <span role="img" aria-label="Pakistan">🇵🇰</span>.
+    </p>
+    <p>
+      I came to infrastructure the long way, through the product. I started full-stack, building
+      desktop software, web apps, backend services, frontends, and the cloud infrastructure underneath
+      them. Over time, that underneath part kept pulling me in: distributed systems at scale,
+      deployments, reliability, observability, CI/CD, Kubernetes, all the machinery around an app that
+      decides whether it survives contact with production.
+    </p>
+    <p>That became the main thread.</p>
+    <p>
+      At <a class="linked" href="https://www.aurorasolutions.io/">Aurora</a> and
+      <a class="linked" href="https://www.stakater.com/">Stakater</a> I worked across the stack but
+      kept moving deeper into platform engineering, migrating applications onto Kubernetes, building
+      OpenShift-based platforms, writing operators and automation, and helping teams ship without
+      hand-rolling the same infrastructure every time.
+    </p>
+    <p>
+      These days it's mostly <strong>Kubernetes at scale</strong>: multi-cluster networking, node
+      lifecycle, GitOps, platform automation, and the unglamorous production details that separate a
+      platform demo from a platform people can actually run.
+    </p>
+    <p>
+      I'm currently at <a class="linked" href="https://www.kubermatic.com/">Kubermatic</a>, building
+      open-source infrastructure tooling and designing Kubernetes environments for enterprise customers
+      across cloud, on-prem, air-gapped, and multi-cloud setups. On the product side, my main focus is
+      <a class="linked" href="https://www.kubermatic.com/products/kubelb/">KubeLB</a>, a centralized
+      load-balancing platform for multi-cluster Kubernetes.
+    </p>
+    <p>
+      Like everyone with an internet connection, I've been pulled into the AI gravity well too, though
+      I'm mostly interested in the unglamorous layer underneath it: GPUs, inference, model serving,
+      training workloads, routing, scheduling, and the real cost of running models yourself instead of
+      renting them forever. So I built
+      <a class="linked" href="/projects/kubernetes-llm-inference-platform">Kubernetes LLM Inference Platform</a>,
+      a GitOps-managed stack for self-hosting inference on your own GPUs.
+    </p>
+    <p>
+      I use this stuff daily too, not just build it: agents, AI-assisted everything, and an AI bill
+      that's quietly overtaken my food delivery.
+    </p>
+    <p>This site is where I write about what I'm building, learning, and occasionally overthinking.</p>
+  </div>
+</Base>

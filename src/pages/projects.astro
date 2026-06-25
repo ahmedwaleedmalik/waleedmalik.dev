@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import { PROJECTS } from '../projects';
+
+function repoOf(href: string): string | null {
+  const m = href.match(/github\.com\/([^/]+)\/([^/]+?)\/?$/);
+  return m ? `${m[1]}/${m[2]}` : null;
+}
+
+async function fetchStars(repo: string): Promise<number | null> {
+  try {
+    const r = await fetch(`https://api.github.com/repos/${repo}`, {
+      headers: { 'User-Agent': 'waleedmalik.dev', Accept: 'application/vnd.github+json' },
+    });
+    if (!r.ok) return null;
+    const d = await r.json();
+    return typeof d.stargazers_count === 'number' ? d.stargazers_count : null;
+  } catch {
+    return null;
+  }
+}
+
+const fmt = (n: number) => (n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : String(n));
+
+const stars = await Promise.all(
+  PROJECTS.map((p) => {
+    const repo = repoOf(p.href);
+    return repo ? fetchStars(repo) : Promise.resolve(null);
+  }),
+);
+---
+
+<Base title="Projects" description="Open-source and platform engineering work.">
+  <h1>Projects</h1>
+  <p class="muted">
+    Open-source infrastructure tooling and platforms I've built, led, or maintain. Mostly Go and
+    Kubernetes.
+  </p>
+  <div>
+    {
+      PROJECTS.map((p, i) => (
+        <div class="project">
+          <div class="project-head">
+            <a
+              class="name linked"
+              href={p.href}
+              target={p.href.startsWith('http') ? '_blank' : undefined}
+              rel={p.href.startsWith('http') ? 'noopener' : undefined}
+            >
+              {p.name}
+            </a>
+            <span class="role"> · {p.role}</span>
+            {stars[i] != null && <span class="stars">★ {fmt(stars[i]!)}</span>}
+          </div>
+          <p class="dek">{p.blurb}</p>
+        </div>
+      ))
+    }
+  </div>
+</Base>
