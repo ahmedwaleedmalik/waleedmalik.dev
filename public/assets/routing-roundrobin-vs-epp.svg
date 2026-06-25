@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" font-family="ui-sans-serif, -apple-system, Segoe UI, Roboto, Arial, sans-serif">
+  <defs>
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1B2436"/><stop offset="1" stop-color="#131A29"/>
+    </linearGradient>
+    <style>
+      .mono { font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace; }
+      .eye  { fill:#5E6B82; letter-spacing:3px; font-size:12px; font-weight:600; }
+      .h1   { fill:#EEF2FA; font-size:27px; font-weight:700; letter-spacing:-0.5px; }
+      .sub  { fill:#8A97AD; font-size:13.5px; }
+      .ptitle{ fill:#EBF0F8; font-size:16px; font-weight:700; }
+      .cap  { fill:#7E8BA2; font-size:12px; }
+      .pod  { fill:#D9E1EF; font-size:13px; font-weight:600; }
+      .cnt  { font-size:20px; font-weight:800; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="620" rx="20" fill="#0B0F19"/>
+
+  <!-- header -->
+  <text x="56" y="52" class="eye mono">SERVING · ROUTING</text>
+  <text x="56" y="84" class="h1">The load balancer can't see what matters</text>
+  <text x="56" y="108" class="sub">Same three replicas, two routers. Only one reads the state that drives tail latency.</text>
+
+  <!-- signal strip -->
+  <rect x="56" y="132" width="848" height="62" rx="12" fill="#15101A" stroke="#5A3A52"/>
+  <text x="78" y="158" class="eye mono" fill="#E08AC0">THE SIGNAL THAT LIES</text>
+  <g class="mono">
+    <text x="78" y="182" font-size="13" fill="#C9A7BE">GPU util</text>
+    <text x="150" y="182" font-size="14" font-weight="700" fill="#FF9B9B">100%</text>
+    <text x="220" y="182" font-size="13" fill="#C9A7BE">KV-cache</text>
+    <text x="305" y="182" font-size="14" font-weight="700" fill="#9FE7C8">1.1%</text>
+    <text x="375" y="182" font-size="13" fill="#C9A7BE">queue</text>
+    <text x="430" y="182" font-size="14" font-weight="700" fill="#9FE7C8">0</text>
+  </g>
+  <text x="500" y="168" class="cap" font-size="12.5">Util pins at 100% under PagedAttention and tells you nothing.</text>
+  <text x="500" y="186" class="cap" font-size="12.5">Queue depth (vllm:num_requests_waiting) is the real saturation signal.</text>
+
+  <!-- divider -->
+  <line x1="480" y1="226" x2="480" y2="582" stroke="#1E283C" stroke-width="1.4"/>
+
+  <!-- ============ LEFT: round robin ============ -->
+  <text x="56" y="248" class="eye mono" fill="#9AA6BC">PLAIN HTTP LOAD BALANCER</text>
+  <text x="56" y="274" class="ptitle">Round-robin</text>
+  <text x="56" y="294" class="cap">Counts connections. Blind to KV-cache and queue depth.</text>
+
+  <!-- LB box -->
+  <rect x="150" y="312" width="160" height="46" rx="10" fill="url(#plate)" stroke="#3A4F74"/>
+  <text x="230" y="340" class="pod" text-anchor="middle">HTTP LB</text>
+
+  <!-- three even arrows -->
+  <path d="M210 358 L110 432" stroke="#5E6B82" stroke-width="2"/><polygon points="110,432 118,424 122,432" fill="#5E6B82"/>
+  <path d="M230 358 L230 432" stroke="#5E6B82" stroke-width="2"/><polygon points="230,432 226,422 234,422" fill="#5E6B82"/>
+  <path d="M250 358 L350 432" stroke="#5E6B82" stroke-width="2"/><polygon points="350,432 338,432 342,424" fill="#5E6B82"/>
+
+  <!-- three pods, even -->
+  <g>
+    <rect x="62" y="436" width="96" height="84" rx="12" fill="url(#plate)" stroke="#28344B"/>
+    <text x="110" y="462" class="pod" text-anchor="middle">pod A</text>
+    <text x="110" y="494" class="cnt mono" text-anchor="middle" fill="#9AA6BC">4</text>
+    <rect x="182" y="436" width="96" height="84" rx="12" fill="#241A1A" stroke="#7A3B3B" stroke-width="1.6"/>
+    <text x="230" y="462" class="pod" text-anchor="middle" fill="#FFC2C2">pod B</text>
+    <text x="230" y="494" class="cnt mono" text-anchor="middle" fill="#FF9B9B">4</text>
+    <text x="230" y="512" class="mono" text-anchor="middle" font-size="10" fill="#C9A7A7">saturated</text>
+    <rect x="302" y="436" width="96" height="84" rx="12" fill="url(#plate)" stroke="#28344B"/>
+    <text x="350" y="462" class="pod" text-anchor="middle">pod C</text>
+    <text x="350" y="494" class="cnt mono" text-anchor="middle" fill="#9AA6BC">4</text>
+  </g>
+  <text x="56" y="556" class="cap">4 / 4 / 4 - the saturated replica gets the same share as the idle ones.</text>
+
+  <!-- ============ RIGHT: EPP ============ -->
+  <text x="512" y="248" class="eye mono" fill="#9FB6E8">INFERENCE-AWARE ROUTING · GIE / EPP</text>
+  <text x="512" y="274" class="ptitle">Endpoint Picker</text>
+  <text x="512" y="294" class="cap">Scores every replica per request on live KV-cache + queue depth.</text>
+
+  <!-- EPP box -->
+  <rect x="606" y="312" width="160" height="46" rx="10" fill="#15233A" stroke="#3A4F74"/>
+  <text x="686" y="334" class="pod" text-anchor="middle" fill="#9FB6E8">InferencePool</text>
+  <text x="686" y="350" class="mono" text-anchor="middle" font-size="10" fill="#7E9BD0">+ EPP scorer</text>
+
+  <!-- three uneven arrows (weights vary) -->
+  <path d="M666 358 L566 432" stroke="#5E6B82" stroke-width="1.6"/><polygon points="566,432 574,424 578,432" fill="#5E6B82"/>
+  <path d="M686 358 L686 432" stroke="#4A597F" stroke-width="1.3"/><polygon points="686,432 682,422 690,422" fill="#4A597F"/>
+  <path d="M706 358 L806 432" stroke="#7C9CFF" stroke-width="3"/><polygon points="806,432 794,432 798,424" fill="#7C9CFF"/>
+
+  <g>
+    <rect x="518" y="436" width="96" height="84" rx="12" fill="url(#plate)" stroke="#28344B"/>
+    <text x="566" y="462" class="pod" text-anchor="middle">pod A</text>
+    <text x="566" y="494" class="cnt mono" text-anchor="middle" fill="#9FB6E8">3</text>
+    <rect x="638" y="436" width="96" height="84" rx="12" fill="url(#plate)" stroke="#28344B"/>
+    <text x="686" y="462" class="pod" text-anchor="middle">pod B</text>
+    <text x="686" y="494" class="cnt mono" text-anchor="middle" fill="#7E8BA2">2</text>
+    <text x="686" y="512" class="mono" text-anchor="middle" font-size="10" fill="#7E8BA2">backing off</text>
+    <rect x="758" y="436" width="96" height="84" rx="12" fill="#15233A" stroke="#3A4F74" stroke-width="1.6"/>
+    <text x="806" y="462" class="pod" text-anchor="middle" fill="#9FB6E8">pod C</text>
+    <text x="806" y="494" class="cnt mono" text-anchor="middle" fill="#7C9CFF">7</text>
+    <text x="806" y="512" class="mono" text-anchor="middle" font-size="10" fill="#7E9BD0">most headroom</text>
+  </g>
+  <text x="512" y="556" class="cap">3 / 2 / 7 - traffic follows headroom, not a rotation. (Observed live.)</text>
+
+  <text x="56" y="596" class="cap" font-size="12.5">Measured: one L4 holds 29.5 req/s at concurrency 32; two RTX 3090s reach 81 req/s, ~50/50 across both, zero errors over ~3000 requests.</text>
+</svg>

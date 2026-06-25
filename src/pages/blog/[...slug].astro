@@ -1,0 +1,34 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Post from '../../layouts/Post.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props as { post: CollectionEntry<'blog'> };
+const { Content } = await render(post);
+
+function slugify(value: string) {
+  return value
+    .replace(/<[^>]+>/g, '')
+    .replace(/[^a-zA-Z0-9\s-]/g, '')
+    .trim()
+    .toLowerCase()
+    .replace(/[\s-]+/g, '-');
+}
+
+const headings = post.body
+  .split('\n')
+  .filter((line) => line.startsWith('## '))
+  .map((line) => {
+    const text = line.replace(/^##\s+/, '').trim();
+    return { text, slug: slugify(text) };
+  });
+---
+
+<Post post={post} headings={headings}>
+  <Content />
+</Post>
