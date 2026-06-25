@@ -1,0 +1,182 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Kubernetes LLM Inference Platform"
+  description="A production-grade, GitOps-managed platform for self-hosted LLM inference at scale: GPU substrate, vLLM/KServe/llm-d serving, inference-aware routing, LiteLLM budgets, observability, and developer AI workflows."
+>
+  <p class="eyebrow">Project</p>
+  <h1>Kubernetes LLM Inference Platform</h1>
+  <p class="muted">
+    A production-grade, GitOps-managed platform for self-hosted LLM inference at scale: GPU substrate,
+    vLLM/KServe/llm-d serving, inference-aware routing, tenant budgets, observability, and developer AI
+    workflows.
+  </p>
+
+  <div class="project-actions">
+    <a class="linked" href="/blog/missing-control-plane-above-vllm">Read the flagship article</a>
+    <a class="linked" href="https://github.com/ahmedwaleedmalik/k8s-llm-inference-platform">GitHub</a>
+    <a class="linked" href="https://ai.wmx.dev">Documentation</a>
+  </div>
+
+  <hr />
+
+  <section class="project-hero">
+    <p>
+      Self-hosting a model is easy to demo and hard to operate. The missing layer is everything
+      around the model server: who can call it, which model they can see, how much they can spend,
+      where the request should route, which signal should scale capacity, how secrets enter the
+      cluster, and how you know the system is healthy.
+    </p>
+    <p>
+      This project turns those decisions into a runnable Kubernetes stack. It is not a chatbot app.
+      The model server is one workload inside a platform and it scales, from a single GPU to
+      multi-GPU nodes, as configuration rather than a rewrite.
+    </p>
+  </section>
+
+  <section>
+    <div class="prose">
+      <p>
+        <img
+          src="/assets/inference-stack.svg"
+          alt="The platform as a layered stack: experience, tenant edge (keys, budgets, guardrails, SSO), inference-aware routing, serving, GPU scheduling, and cloud substrate, on an Argo CD, External Secrets, and Prometheus foundation."
+          loading="lazy"
+        />
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-label">Proof stack</h2>
+    <div class="proof-grid">
+      <div>
+        <h3>Core proof</h3>
+        <p>
+          GPU Kubernetes on GKE, raw vLLM serving, Prometheus/Grafana/DCGM telemetry, and benchmark
+          data for TTFT, ITL, throughput, queue depth, and KV-cache pressure.
+        </p>
+      </div>
+      <div>
+        <h3>Portability proof</h3>
+        <p>
+          OpenTofu owns the substrate; Argo CD owns the in-cluster platform. GKE consumes managed
+          GPU plumbing; Hetzner validates the self-managed GPU Operator path.
+        </p>
+      </div>
+      <div>
+        <h3>Platform proof</h3>
+        <p>
+          LiteLLM virtual keys and budgets, GIE inference-aware routing, KEDA queue-depth autoscale,
+          External Secrets, and three serving layers validated on multi-GPU; raw vLLM, KServe, and
+          llm-d (disaggregated prefill/decode with KV-aware routing).
+        </p>
+      </div>
+      <div>
+        <h3>Workflow proof</h3>
+        <p>
+          Open WebUI, Tabby, n8n, and an MCP tool gateway sit above the inference platform instead of
+          turning the repo into an AI homelab bundle.
+        </p>
+      </div>
+      <div style="grid-column: 1 / -1;">
+        <h3>Governance &amp; cost</h3>
+        <p>
+          SSO via Dex + oauth2-proxy, PII and prompt-injection guardrails at the tenant edge, Kyverno
+          and default-deny NetworkPolicy enforcement, and OpenCost for per-tenant cost allocation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-label">Request path</h2>
+    <div class="prose">
+      <p>The request path is layered on purpose:</p>
+      <pre><code>Client / developer tool
+  -> LiteLLM tenant edge
+  -> Gateway API + GIE routing
+  -> vLLM / KServe serving layer
+  -> GPU substrate</code></pre>
+      <p>
+        The important decision is not the component list. It is the ownership boundary: LiteLLM owns
+        tenant economics, GIE owns endpoint selection, vLLM owns token serving, KEDA owns
+        queue-depth autoscaling, OpenTofu owns the cloud substrate, Argo CD owns the in-cluster
+        platform, and External Secrets owns runtime secret delivery.
+      </p>
+      <p>
+        <img
+          src="/assets/llm-inference-two-layers.svg"
+          alt="LiteLLM owns economics while GIE owns inference-aware routing."
+          loading="lazy"
+        />
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-label">Selected results</h2>
+    <div class="prose">
+      <p>On one NVIDIA L4 serving <code>Qwen2.5-0.5B-Instruct</code> with vLLM:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Signal</th>
+            <th>Observed result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>GPU utilization</td>
+            <td>100%</td>
+          </tr>
+          <tr>
+            <td>KV-cache usage</td>
+            <td>1.1%</td>
+          </tr>
+          <tr>
+            <td>Waiting requests</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Throughput at concurrency 32</td>
+            <td>3,773 output tok/s</td>
+          </tr>
+          <tr>
+            <td>TTFT p50, concurrency 1 to 32</td>
+            <td>27 ms to 135 ms</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        The lesson: GPU utilization alone was the wrong scaling signal. Queue depth carried the
+        useful backpressure signal.
+      </p>
+      <p>
+        These L4 numbers are the cheapest slice, not the ceiling. The same stack runs across
+        multi-GPU nodes with zero-downtime rolling updates; adding capacity is replica count and GPU
+        budget, not rework.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-label">Built for production</h2>
+    <p>
+      Highly available by design; zero-downtime rolling updates across multi-GPU nodes, with SSO and
+      policy-enforced tenancy, per-tenant budgets and cost attribution, and disaggregated prefill/decode
+      serving for larger models.
+    </p>
+  </section>
+
+  <section>
+    <h2 class="section-label">Related writing</h2>
+    <ul class="post-list">
+      <li>
+        <a class="title" href="/blog/missing-control-plane-above-vllm">The Missing Control Plane Above vLLM</a>
+        <span class="date">flagship</span>
+      </li>
+    </ul>
+  </section>
+</Base>

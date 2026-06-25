@@ -1,0 +1,94 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { SITE, SOCIAL } from '../consts';
+import { PROJECTS } from '../projects';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const fmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+const featuredProject = PROJECTS.find((p) => p.href === '/projects/kubernetes-llm-inference-platform');
+
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.author,
+  url: SITE.url,
+  jobTitle: 'Platform Engineer',
+  sameAs: SOCIAL.filter((s) => !s.href.startsWith('mailto:')).map((s) => s.href),
+};
+---
+
+<Base>
+  <script type="application/ld+json" set:html={JSON.stringify(personLd)} is:inline />
+  <section class="intro">
+    <span class="avatar-home" role="img" aria-label="Waleed Malik"></span>
+    <div>
+      <h1>Waleed Malik</h1>
+      <p class="lead">Platform engineer</p>
+    </div>
+  </section>
+
+  <section>
+    <p>
+      I build infrastructure for teams running Kubernetes at scale: networking, GitOps, cluster
+      lifecycle, and the unglamorous stuff that just has to work.
+    </p>
+    <p>
+      Lately I've been exploring the less magical side of AI: inference, model serving, training, and
+      the actual economics of running models yourself instead of renting them forever.
+    </p>
+    <p>
+      Off the keyboard, it's football, video games, and too much coffee.
+    </p>
+    <p class="muted">
+      {
+        SOCIAL.map((s, i) => (
+          <>
+            {i > 0 && ' · '}
+            <a class="linked" href={s.href}>
+              {s.label}
+            </a>
+          </>
+        ))
+      }
+    </p>
+  </section>
+
+  {
+    featuredProject && (
+      <section>
+        <h2 class="section-label">Featured project</h2>
+        <div class="feature-card">
+          <a class="linked feature-title" href={featuredProject.href}>
+            {featuredProject.name}
+          </a>
+          <p>{featuredProject.blurb}</p>
+          <p class="muted">
+            Best read:{' '}
+            <a class="linked" href="/blog/missing-control-plane-above-vllm">
+              The Missing Control Plane Above vLLM
+            </a>
+          </p>
+        </div>
+      </section>
+    )
+  }
+
+  <section>
+    <h2 class="section-label">Writing</h2>
+    <ul class="post-list">
+      {
+        posts.map((post) => (
+          <li>
+            <a class="title" href={`/blog/${post.id}`}>
+              {post.data.title}
+            </a>
+            <span class="date">{fmt(post.data.pubDate)}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
