@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" font-family="ui-sans-serif, -apple-system, Segoe UI, Roboto, Arial, sans-serif">
+  <defs>
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1B2436"/><stop offset="1" stop-color="#131A29"/>
+    </linearGradient>
+    <style>
+      .mono { font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace; }
+      .eye  { fill:#5E6B82; letter-spacing:3px; font-size:12px; font-weight:600; }
+      .h1   { fill:#EEF2FA; font-size:27px; font-weight:700; letter-spacing:-0.5px; }
+      .sub  { fill:#8A97AD; font-size:13.5px; }
+      .box  { fill:#EBF0F8; font-size:15px; font-weight:700; }
+      .desc { fill:#7E8BA2; font-size:11.5px; }
+      .lbl  { fill:#9AA6BC; font-size:11px; }
+      .bandlbl { font-size:12px; font-weight:700; letter-spacing:0.3px; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="640" rx="20" fill="#0B0F19"/>
+
+  <!-- header -->
+  <text x="56" y="52" class="eye mono">PRODUCT · TENANT EDGE</text>
+  <text x="56" y="84" class="h1">Two gateways, two questions</text>
+  <text x="56" y="108" class="sub">Economics and inference-routing are different layers. A real LLMaaS stacks both.</text>
+
+  <!-- economics band -->
+  <rect x="40" y="150" width="700" height="150" rx="14" fill="#10160F" stroke="#3C5A2E" stroke-width="1.1" opacity="0.55"/>
+  <text x="58" y="174" class="bandlbl mono" fill="#9FD08A">ECONOMICS - LiteLLM · "which tenant, how many dollars?"</text>
+
+  <!-- developer -->
+  <rect x="56" y="198" width="120" height="74" rx="12" fill="url(#plate)" stroke="#28344B"/>
+  <text x="116" y="228" class="box" text-anchor="middle">developer</text>
+  <text x="116" y="250" class="desc mono" text-anchor="middle">virtual key</text>
+  <path d="M178 235 h36" stroke="#5E6B82" stroke-width="2"/><polygon points="216,235 206,231 206,239" fill="#5E6B82"/>
+
+  <!-- LiteLLM -->
+  <rect x="218" y="186" width="196" height="98" rx="12" fill="url(#plate)" stroke="#4A6B38" stroke-width="1.4"/>
+  <text x="316" y="214" class="box" text-anchor="middle">LiteLLM proxy</text>
+  <text x="316" y="236" class="desc" text-anchor="middle">virtual keys · per-key $ budget</text>
+  <text x="316" y="253" class="desc" text-anchor="middle">spend ledger · 429 on cap</text>
+  <text x="316" y="272" class="lbl mono" text-anchor="middle" fill="#9FD08A">the dollar question</text>
+
+  <!-- Postgres -->
+  <path d="M414 235 h36" stroke="#5E6B82" stroke-width="2"/><polygon points="452,235 442,231 442,239" fill="#5E6B82"/>
+  <rect x="454" y="198" width="120" height="74" rx="12" fill="#15233A" stroke="#3A4F74"/>
+  <text x="514" y="226" class="box" text-anchor="middle" font-size="14">Postgres</text>
+  <text x="514" y="248" class="desc mono" text-anchor="middle">SpendLogs</text>
+
+  <!-- Grafana (read only) -->
+  <path d="M574 235 h36" stroke="#4A597F" stroke-width="1.6" stroke-dasharray="4 4"/><polygon points="610,235 600,231 600,239" fill="#4A597F"/>
+  <rect x="612" y="198" width="116" height="74" rx="12" fill="url(#plate)" stroke="#28344B"/>
+  <text x="670" y="226" class="box" text-anchor="middle" font-size="14">Grafana</text>
+  <text x="670" y="248" class="desc" text-anchor="middle">spend by key</text>
+  <text x="670" y="290" class="lbl mono" text-anchor="middle" fill="#7E9BD0">read-only · OSS · $0</text>
+
+  <!-- branch labels in the gap (300..344) -->
+  <text x="232" y="320" class="lbl mono" fill="#9AA6BC">single-replica: direct</text>
+  <text x="392" y="320" class="lbl mono" fill="#9AA6BC">multi-replica: via GIE</text>
+
+  <!-- routing band -->
+  <rect x="40" y="344" width="880" height="158" rx="14" fill="#0F1320" stroke="#33436A" stroke-width="1.1" opacity="0.6"/>
+  <text x="58" y="368" class="bandlbl mono" fill="#9FB6E8">INFERENCE-AWARE ROUTING - GIE · "which of N identical pods, right now?"</text>
+
+  <!-- GIE box -->
+  <rect x="300" y="392" width="150" height="86" rx="12" fill="#15233A" stroke="#3A4F74" stroke-width="1.4"/>
+  <text x="375" y="420" class="box" text-anchor="middle" font-size="14">InferencePool</text>
+  <text x="375" y="440" class="desc" text-anchor="middle">+ EPP scorer</text>
+  <text x="375" y="459" class="lbl mono" text-anchor="middle" fill="#7E9BD0">KV-cache / queue</text>
+
+  <!-- vLLM coder pods stack -->
+  <rect x="560" y="384" width="360" height="104" rx="12" fill="#101725" stroke="#2A3650"/>
+  <text x="578" y="408" class="eye mono" fill="#6E7C95">vLLM CODER PODS · ONE L4</text>
+  <g>
+    <rect x="578" y="420" width="104" height="52" rx="9" fill="url(#plate)" stroke="#3A4F74"/>
+    <text x="630" y="443" class="box" text-anchor="middle" font-size="13">chat</text>
+    <text x="630" y="461" class="desc" text-anchor="middle" font-size="10">sidebar</text>
+    <rect x="692" y="420" width="104" height="52" rx="9" fill="url(#plate)" stroke="#7A6A3B"/>
+    <text x="744" y="443" class="box" text-anchor="middle" font-size="13" fill="#F2D49B">FIM</text>
+    <text x="744" y="461" class="desc" text-anchor="middle" font-size="10" fill="#C9B98A">autocomplete</text>
+    <rect x="806" y="420" width="100" height="52" rx="9" fill="url(#plate)" stroke="#3A4F74"/>
+    <text x="856" y="443" class="box" text-anchor="middle" font-size="13">agent</text>
+    <text x="856" y="461" class="desc" text-anchor="middle" font-size="10">tool-calling</text>
+  </g>
+
+  <!-- LiteLLM -> via GIE -->
+  <path d="M350 284 C350 330, 375 350, 375 390" stroke="#5E6B82" stroke-width="2" fill="none"/><polygon points="375,392 371,382 379,382" fill="#5E6B82"/>
+  <!-- GIE -> pods -->
+  <path d="M450 432 h106" stroke="#7C9CFF" stroke-width="2.4"/><polygon points="558,432 548,428 548,436" fill="#7C9CFF"/>
+  <!-- LiteLLM -> direct (bypass GIE, curve over the top to pods) -->
+  <path d="M285 284 C285 348, 470 352, 558 430" stroke="#5E6B82" stroke-width="1.8" fill="none" stroke-dasharray="6 5"/><polygon points="558,430 547,429 551,422" fill="#5E6B82"/>
+
+  <text x="56" y="544" class="desc" font-size="12.5">In this lab the coder models are single-replica, so most traffic goes direct; GIE sits behind the pool for when they aren't.</text>
+  <text x="56" y="568" class="desc" font-size="12.5">The seam is the point: LiteLLM never picks a pod, GIE never reads a budget. Stack them; don't make one do both.</text>
+  <text x="56" y="600" class="lbl mono" fill="#F2D49B" font-size="11.5">FIM trap: send fill-in-the-middle to /completions, never /chat/completions. The chat template silently corrupts it.</text>
+</svg>
