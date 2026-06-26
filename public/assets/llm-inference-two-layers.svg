@@ -88,7 +88,7 @@
   <!-- LiteLLM -> direct (bypass GIE, curve over the top to pods) -->
   <path d="M285 284 C285 348, 470 352, 558 430" stroke="#5E6B82" stroke-width="1.8" fill="none" stroke-dasharray="6 5"/><polygon points="558,430 547,429 551,422" fill="#5E6B82"/>
 
-  <text x="56" y="544" class="desc" font-size="12.5">In this lab the coder models are single-replica, so most traffic goes direct; GIE sits behind the pool for when they aren't.</text>
+  <text x="56" y="544" class="desc" font-size="12.5">GIE sits behind the pool to route traffic when multiple models/GPUs are running</text>
   <text x="56" y="568" class="desc" font-size="12.5">The seam is the point: LiteLLM never picks a pod, GIE never reads a budget. Stack them; don't make one do both.</text>
   <text x="56" y="600" class="lbl mono" fill="#F2D49B" font-size="11.5">FIM trap: send fill-in-the-middle to /completions, never /chat/completions. The chat template silently corrupts it.</text>
 </svg>
