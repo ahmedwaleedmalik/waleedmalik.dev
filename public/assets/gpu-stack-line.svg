@@ -1,95 +1,82 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" font-family="ui-sans-serif, -apple-system, Segoe UI, Roboto, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 588" font-family="'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
   <defs>
-    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#1B2436"/><stop offset="1" stop-color="#131A29"/>
-    </linearGradient>
-    <linearGradient id="portband" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#16233A"/><stop offset="1" stop-color="#101A2B"/>
-    </linearGradient>
     <style>
-      .mono { font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace; }
-      .eye  { fill:#5E6B82; letter-spacing:3px; font-size:12px; font-weight:600; }
-      .h1   { fill:#EEF2FA; font-size:27px; font-weight:700; letter-spacing:-0.5px; }
-      .sub  { fill:#8A97AD; font-size:13.5px; }
-      .node { fill:#EBF0F8; font-size:14px; font-weight:700; }
-      .ndesc{ fill:#7E8BA2; font-size:11px; }
-      .band { fill:#AEB9CD; font-size:13px; font-weight:600; }
-      .tag  { fill:#B9C4D8; font-size:11.5px; }
-      .err  { fill:#FF9B9B; font-size:12px; font-weight:600; }
+      .mono { font-family: 'Geist Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace; }
+      .cap   { fill:#8a8a8a; font-size:13.5px; }
+      .node  { fill:#ededed; font-size:14px; font-weight:700; }
+      .ndesc { fill:#8a8a8a; font-size:11px; }
+      .band  { fill:#bcbcbc; font-size:13px; font-weight:600; }
+      .tag   { fill:#cfcfcf; font-size:11.5px; }
+      .pill  { fill:#2a2a2a; stroke:#404040; stroke-width:1; }
+      .err   { fill:#c98a8a; font-size:12px; font-weight:600; }
     </style>
   </defs>
 
-  <rect x="0" y="0" width="960" height="600" rx="20" fill="#0B0F19"/>
+  <rect x="0" y="0" width="960" height="588" rx="10" fill="#1c1c1c"/>
 
-  <!-- header -->
-  <text x="56" y="52" class="eye mono">SUBSTRATE</text>
-  <text x="56" y="84" class="h1">Where the portability line actually sits</text>
-  <text x="56" y="108" class="sub">The GPU stack is the provider's territory. Your portability lives one layer up.</text>
+  <!-- caption (heading lives in the prose, not here) -->
+  <text x="56" y="50" class="cap">The GPU stack is the provider's territory. Your portability lives one layer up.</text>
 
   <!-- portable platform band (top) -->
-  <rect x="56" y="140" width="848" height="92" rx="14" fill="url(#portband)" stroke="#2C7F6A" stroke-width="1.3"/>
-  <rect x="56" y="140" width="5" height="92" rx="2" fill="#5BD2A0"/>
-  <text x="80" y="173" class="eye mono" fill="#5BD2A0">YOURS · PORTABLE</text>
-  <text x="80" y="198" class="node" font-size="16">Platform manifests</text>
-  <text x="80" y="219" class="ndesc" font-size="12">serving · routing · scheduling · observability · GitOps - runs on any conformant cluster</text>
+  <rect x="56" y="84" width="848" height="92" rx="12" fill="#202020" stroke="#333333"/>
+  <rect x="56" y="84" width="4" height="92" rx="2" fill="#6a6a6a"/>
+  <text x="80" y="130" class="node" font-size="16">Inference Platform</text>
+  <text x="80" y="153" class="ndesc" font-size="12">Serving · Routing · Scheduling · Observability · GitOps — runs on any conformant cluster</text>
   <g class="mono">
-    <rect x="556" y="183" width="78" height="26" rx="7" fill="#15281F" stroke="#2C7F6A"/><text x="595" y="200" class="tag" text-anchor="middle" fill="#9FE7C8">vLLM</text>
-    <rect x="644" y="183" width="74" height="26" rx="7" fill="#15281F" stroke="#2C7F6A"/><text x="681" y="200" class="tag" text-anchor="middle" fill="#9FE7C8">GIE</text>
-    <rect x="728" y="183" width="80" height="26" rx="7" fill="#15281F" stroke="#2C7F6A"/><text x="768" y="200" class="tag" text-anchor="middle" fill="#9FE7C8">Argo CD</text>
-    <rect x="818" y="183" width="68" height="26" rx="7" fill="#15281F" stroke="#2C7F6A"/><text x="852" y="200" class="tag" text-anchor="middle" fill="#9FE7C8">ESO</text>
+    <rect x="556" y="110" width="78" height="26" rx="7" class="pill"/><text x="595" y="127" class="tag" text-anchor="middle">vLLM</text>
+    <rect x="644" y="110" width="74" height="26" rx="7" class="pill"/><text x="681" y="127" class="tag" text-anchor="middle">GIE</text>
+    <rect x="728" y="110" width="80" height="26" rx="7" class="pill"/><text x="768" y="127" class="tag" text-anchor="middle">Argo CD</text>
+    <rect x="818" y="110" width="68" height="26" rx="7" class="pill"/><text x="852" y="127" class="tag" text-anchor="middle">ESO</text>
   </g>
 
   <!-- the line -->
-  <line x1="56" y1="262" x2="904" y2="262" stroke="#39486A" stroke-width="1.5" stroke-dasharray="2 6"/>
-  <text x="56" y="256" class="eye mono" fill="#5E6B82">- the line tutorials never draw -</text>
+  <line x1="56" y1="206" x2="904" y2="206" stroke="#3a3a3a" stroke-width="1.5" stroke-dasharray="2 6"/>
+  <text x="56" y="200" class="ndesc mono" fill="#6f6f6f">the line tutorials never draw</text>
 
   <!-- provider stack chain (bottom) -->
-  <!-- six nodes left to right -->
-  <!-- node helper geometry: width 128, gap arrow 18, start x 56 -->
   <g>
     <!-- 1 GPU -->
-    <rect x="56" y="300" width="128" height="78" rx="12" fill="url(#plate)" stroke="#28344B"/>
-    <text x="120" y="333" class="node" text-anchor="middle">GPU (L4)</text>
-    <text x="120" y="354" class="ndesc" text-anchor="middle">the silicon</text>
-    <!-- arrow -->
-    <path d="M186 339 h12" stroke="#5E6B82" stroke-width="2"/><polygon points="200,339 192,335 192,343" fill="#5E6B82"/>
+    <rect x="56" y="244" width="128" height="78" rx="11" fill="#242424" stroke="#333333"/>
+    <text x="120" y="277" class="node" text-anchor="middle">GPU (L4)</text>
+    <text x="120" y="298" class="ndesc" text-anchor="middle">the silicon</text>
+    <path d="M186 283 h12" stroke="#6a6a6a" stroke-width="2"/><polygon points="200,283 192,279 192,287" fill="#6a6a6a"/>
     <!-- 2 driver -->
-    <rect x="202" y="300" width="128" height="78" rx="12" fill="url(#plate)" stroke="#28344B"/>
-    <text x="266" y="333" class="node" text-anchor="middle">Kernel driver</text>
-    <text x="266" y="354" class="ndesc" text-anchor="middle">nvidia.ko</text>
-    <path d="M332 339 h12" stroke="#5E6B82" stroke-width="2"/><polygon points="346,339 338,335 338,343" fill="#5E6B82"/>
+    <rect x="202" y="244" width="128" height="78" rx="11" fill="#242424" stroke="#333333"/>
+    <text x="266" y="277" class="node" text-anchor="middle">Kernel driver</text>
+    <text x="266" y="298" class="ndesc" text-anchor="middle">nvidia.ko</text>
+    <path d="M332 283 h12" stroke="#6a6a6a" stroke-width="2"/><polygon points="346,283 338,279 338,287" fill="#6a6a6a"/>
     <!-- 3 containerd (failure node) -->
-    <rect x="348" y="300" width="128" height="78" rx="12" fill="url(#plate)" stroke="#7A3B3B" stroke-width="1.6"/>
-    <text x="412" y="333" class="node" text-anchor="middle">containerd</text>
-    <text x="412" y="354" class="ndesc" text-anchor="middle">runtime config</text>
-    <path d="M478 339 h12" stroke="#5E6B82" stroke-width="2"/><polygon points="492,339 484,335 484,343" fill="#5E6B82"/>
+    <rect x="348" y="244" width="128" height="78" rx="11" fill="#242424" stroke="#7a5a5a" stroke-width="1.6"/>
+    <text x="412" y="277" class="node" text-anchor="middle">containerd</text>
+    <text x="412" y="298" class="ndesc" text-anchor="middle">runtime config</text>
+    <path d="M478 283 h12" stroke="#6a6a6a" stroke-width="2"/><polygon points="492,283 484,279 484,287" fill="#6a6a6a"/>
     <!-- 4 device plugin -->
-    <rect x="494" y="300" width="128" height="78" rx="12" fill="url(#plate)" stroke="#28344B"/>
-    <text x="558" y="329" class="node" text-anchor="middle">Device plugin</text>
-    <text x="558" y="350" class="ndesc" text-anchor="middle">advertises gpu</text>
-    <path d="M624 339 h12" stroke="#5E6B82" stroke-width="2"/><polygon points="638,339 630,335 630,343" fill="#5E6B82"/>
+    <rect x="494" y="244" width="128" height="78" rx="11" fill="#242424" stroke="#333333"/>
+    <text x="558" y="273" class="node" text-anchor="middle">Device plugin</text>
+    <text x="558" y="294" class="ndesc" text-anchor="middle">advertises gpu</text>
+    <path d="M624 283 h12" stroke="#6a6a6a" stroke-width="2"/><polygon points="638,283 630,279 630,287" fill="#6a6a6a"/>
     <!-- 5 kubelet -->
-    <rect x="640" y="300" width="128" height="78" rx="12" fill="url(#plate)" stroke="#28344B"/>
-    <text x="704" y="333" class="node" text-anchor="middle">kubelet</text>
-    <text x="704" y="354" class="ndesc" text-anchor="middle">schedules</text>
-    <path d="M770 339 h12" stroke="#5E6B82" stroke-width="2"/><polygon points="784,339 776,335 776,343" fill="#5E6B82"/>
+    <rect x="640" y="244" width="128" height="78" rx="11" fill="#242424" stroke="#333333"/>
+    <text x="704" y="277" class="node" text-anchor="middle">kubelet</text>
+    <text x="704" y="298" class="ndesc" text-anchor="middle">schedules</text>
+    <path d="M770 283 h12" stroke="#6a6a6a" stroke-width="2"/><polygon points="784,283 776,279 776,287" fill="#6a6a6a"/>
     <!-- 6 pod -->
-    <rect x="786" y="300" width="118" height="78" rx="12" fill="#15233A" stroke="#3A4F74"/>
-    <text x="845" y="329" class="node" text-anchor="middle" fill="#9FB6E8">Pod sees</text>
-    <text x="845" y="350" class="mono" text-anchor="middle" fill="#9FB6E8" font-size="11">nvidia.com/gpu</text>
+    <rect x="786" y="244" width="118" height="78" rx="11" fill="#262626" stroke="#4a4a4a"/>
+    <text x="845" y="273" class="node" text-anchor="middle">Pod sees</text>
+    <text x="845" y="294" class="mono" text-anchor="middle" fill="#bcbcbc" font-size="11">nvidia.com/gpu</text>
   </g>
 
   <!-- failure callout on containerd -->
-  <path d="M412 378 v22" stroke="#7A3B3B" stroke-width="1.4" stroke-dasharray="2 4"/>
-  <rect x="300" y="402" width="360" height="64" rx="10" fill="#1C1216" stroke="#7A3B3B"/>
-  <text x="318" y="426" class="err mono">nvidia-ctk writes 99-nvidia.toml →</text>
-  <text x="318" y="445" class="tag mono" fill="#C9A7A7">GKE ignores the drop-in dir. Registration</text>
-  <text x="318" y="461" class="tag mono" fill="#C9A7A7">goes nowhere: no runtime for "nvidia" is configured</text>
+  <path d="M412 322 v22" stroke="#7a5a5a" stroke-width="1.4" stroke-dasharray="2 4"/>
+  <rect x="300" y="346" width="404" height="64" rx="10" fill="#221a1a" stroke="#7a5a5a"/>
+  <text x="318" y="370" class="err mono">nvidia-ctk writes 99-nvidia.toml →</text>
+  <text x="318" y="389" class="mono" fill="#b39a9a" font-size="11.5">GKE ignores the drop-in dir. Registration</text>
+  <text x="318" y="405" class="mono" fill="#b39a9a" font-size="11.5">goes nowhere: no runtime for "nvidia" is configured</text>
 
   <!-- provider bracket -->
-  <path d="M56 486 v10 h848 v-10" fill="none" stroke="#39486A" stroke-width="1.4"/>
-  <rect x="330" y="500" width="300" height="34" rx="9" fill="#101725" stroke="#2A3650"/>
-  <text x="480" y="522" class="band" text-anchor="middle">Provider's territory - consume, don't re-run</text>
+  <path d="M56 430 v10 h848 v-10" fill="none" stroke="#3a3a3a" stroke-width="1.4"/>
+  <rect x="222" y="444" width="516" height="34" rx="9" fill="#212121" stroke="#333333"/>
+  <text x="480" y="466" class="band" text-anchor="middle">Managed Kubernetes Provider's territory; consume, don't re-run</text>
 
-  <text x="56" y="566" class="ndesc" font-size="12">On managed Kubernetes the node OS is owned by the provider. The self-managed GPU Operator loses the fight at containerd.</text>
+  <text x="56" y="510" class="ndesc" font-size="12">On managed Kubernetes the node OS is owned by the provider. The self-managed GPU Operator loses the fight at containerd.</text>
 </svg>
