@@ -24,11 +24,15 @@ gVisor implements the Linux system interface in a userspace kernel, reducing the
 
 ![gVisor places a userspace kernel between the application and host kernel. A microVM runs a guest Linux kernel above virtual hardware.](/assets/agent-isolation.svg)
 
-gVisor supports Docker and FUSE, with documented [Docker configuration requirements](https://gvisor.dev/docs/tutorials/docker-in-gvisor/) and a [FUSE implementation](https://gvisor.dev/docs/user_guide/fuse/). Ordinary databases and development tools also aren't, by themselves, a reason to require a VM.
+Using [gVisor as Docker's runtime](https://gvisor.dev/docs/user_guide/quick_start/docker/) and running a Docker daemon **inside** a gVisor sandbox are different setups. The latter matters when an agent is expected to launch its own Docker stack entirely within the sandbox.
 
-The limits are more specific. gVisor's [compatibility documentation](https://gvisor.dev/docs/user_guide/compatibility/) describes restrictions around block-device filesystems, partial `io_uring` support, custom devices, nested KVM and enforcing resource limits between processes inside one sandbox. An agent that chooses its own tools can encounter these edges in ways a fixed application doesn't.
+gVisor documents [support for nested Docker](https://gvisor.dev/docs/tutorials/docker-in-gvisor/), but it requires specific runtime flags, disabling Docker-managed iptables and additional network configuration. Docker 29 also needs storage adjustments, such as a `tmpfs` mount at `/var/lib/docker` or disabling the containerd image store. Basic Docker commands working doesn't guarantee that an arbitrary Docker stack will behave as it does on a normal Linux host.
 
-Modal's [VM Sandboxes release on October 1, 2026](https://modal.com/blog/vm-sandboxes-agent-computers) illustrates the practical difference. Its Cloud Hypervisor runtime reached general availability while gVisor remained the default. In the release, Legora describes removing networking and FUSE workarounds from its Docker-based environment after switching to VMs. That is a concrete compatibility benefit for that workload, rather than evidence that Docker cannot run on gVisor.
+gVisor also has a [FUSE implementation](https://gvisor.dev/docs/user_guide/fuse/). Upstream support and what a particular sandbox provider makes available need to be evaluated separately.
+
+Beyond Docker, gVisor's [compatibility documentation](https://gvisor.dev/docs/user_guide/compatibility/) describes restrictions around block-device filesystems, partial `io_uring` support, custom devices, nested KVM and enforcing resource limits between processes inside one sandbox. An agent that chooses its own tools can encounter these edges in ways a fixed application doesn't.
+
+Modal's [current Sandbox guide recommends its VM runtime for running Docker](https://modal.com/docs/guide/sandboxes#running-docker-in-a-sandbox). Its [October 1, 2026 release](https://modal.com/blog/vm-sandboxes-agent-computers) made Cloud Hypervisor-based VM Sandboxes generally available while retaining gVisor as the default. Legora describes removing networking and FUSE workarounds from its Docker-based environment after switching. That makes the compatibility argument concrete: a full Linux environment can remove operational friction even when upstream gVisor technically supports nested Docker. It doesn't establish a failure of gVisor's isolation boundary.
 
 A guest kernel broadens what software can do, but brings its own memory, patching and virtualization costs. I'd choose the boundary against the actual workload and threat model. Neither approach makes network access or credentials safe automatically; those controls are outside this article's scope.
 
