@@ -11,6 +11,7 @@ const blog = defineCollection({
     tags: z.array(z.string()).default([]),
     heroImage: z.string().optional(),
     presentation: z.enum(['standard', 'feature']).default('standard'),
+    category: z.string().default('LLM infrastructure'),
     draft: z.boolean().default(false),
   }),
 });
