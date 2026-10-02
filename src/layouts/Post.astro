@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { post, headings = [] } = Astro.props;
-const { title, description, pubDate, canonical } = post.data;
+const { title, description, pubDate, canonical, socialImage } = post.data;
 const dateStr = pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 const url = canonical ?? new URL(`/blog/${post.id}/`, SITE.url).href;
 const isFeature = post.data.presentation === 'feature';
@@ -21,11 +21,12 @@ const articleLd = {
   description,
   datePublished: pubDate.toISOString(),
   url,
+  image: new URL(socialImage ?? '/og.png', SITE.url).href,
   author: { '@type': 'Person', name: SITE.author, url: SITE.url },
 };
 ---
 
-<Base title={title} description={description} canonical={canonical} ogType="article">
+<Base title={title} description={description} canonical={canonical} ogType="article" socialImage={socialImage}>
   <script type="application/ld+json" set:html={JSON.stringify(articleLd)} is:inline />
   {
     isFeature ? (

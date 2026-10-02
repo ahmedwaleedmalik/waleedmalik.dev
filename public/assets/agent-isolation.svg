@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 460" role="img" aria-labelledby="title desc">
+<title id="title">Two isolation boundaries</title><desc id="desc">gVisor uses a userspace kernel. A microVM runs a guest Linux kernel behind virtual hardware. Simplified execution paths.</desc>
+<rect width="640" height="460" rx="12" fill="#191919"/>
+<g font-family="Arial, sans-serif" text-anchor="middle" fill="#eeeeee">
+<text x="168" y="52" font-size="25" font-weight="700">gVisor</text><text x="472" y="52" font-size="25" font-weight="700">microVM</text>
+<g fill="#252525" stroke="#565656"><rect x="32" y="80" width="272" height="58" rx="8"/><rect x="32" y="170" width="272" height="58" rx="8"/><rect x="32" y="260" width="272" height="58" rx="8"/><rect x="336" y="80" width="272" height="58" rx="8"/><rect x="336" y="170" width="272" height="58" rx="8"/><rect x="336" y="260" width="272" height="58" rx="8"/><rect x="336" y="350" width="272" height="58" rx="8"/></g>
+<g font-size="23"><text x="168" y="117">Application</text><text x="168" y="207">Userspace kernel</text><text x="168" y="297">Host kernel</text><text x="472" y="117">Application</text><text x="472" y="207">Guest Linux kernel</text><text x="472" y="297">Virtual hardware</text><text x="472" y="387">Host</text></g>
+<g fill="#c9b07a" font-size="27"><text x="168" y="162">↓</text><text x="168" y="252">↓</text><text x="472" y="162">↓</text><text x="472" y="252">↓</text><text x="472" y="342">↓</text></g>
+<text x="168" y="382" fill="#b5b5b5" font-size="20">Simplified paths</text>
+</g></svg>

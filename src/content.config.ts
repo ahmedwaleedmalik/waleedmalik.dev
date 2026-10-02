@@ -10,6 +10,7 @@ const blog = defineCollection({
     canonical: z.string().optional(),
     tags: z.array(z.string()).default([]),
     heroImage: z.string().optional(),
+    socialImage: z.string().optional(),
     presentation: z.enum(['standard', 'feature']).default('standard'),
     category: z.string().default('LLM infrastructure'),
     draft: z.boolean().default(false),

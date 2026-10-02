@@ -9,12 +9,14 @@ interface Props {
   description?: string;
   canonical?: string;
   ogType?: string;
+  socialImage?: string;
 }
 
-const { title, description = SITE.description, canonical, ogType = 'website' } = Astro.props;
+const { title, description = SITE.description, canonical, ogType = 'website', socialImage } = Astro.props;
 const pageTitle = title ? `${title} · ${SITE.title}` : `${SITE.title} · ${SITE.tagline}`;
 const canonicalURL = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
-const ogImage = new URL('/og.png', Astro.site).href;
+const ogImage = new URL(socialImage ?? '/og.png', Astro.site).href;
+const socialTitle = ogType === 'article' && title ? title : pageTitle;
 ---
 
 <meta charset="utf-8" />
@@ -26,14 +28,18 @@ const ogImage = new URL('/og.png', Astro.site).href;
 <link rel="alternate" type="application/rss+xml" title={SITE.title} href="/rss.xml" />
 
 <meta property="og:type" content={ogType} />
-<meta property="og:title" content={pageTitle} />
+<meta property="og:title" content={socialTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:image" content={ogImage} />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={socialImage ? socialTitle : SITE.title} />
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={socialTitle} />
+<meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={socialImage ? socialTitle : SITE.title} />
 
 <script is:inline>
   (function () {
